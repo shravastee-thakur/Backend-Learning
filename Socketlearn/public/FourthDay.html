@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Socket.IO Day 4</title>
+  </head>
+  <body>
+    <h2>Socket.IO Chat</h2>
+    <div id="messages"></div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+      const socket = io();
+      const messagesDiv = document.getElementById("messages");
+
+      function display(msg, label) {
+        const p = document.createElement("p");
+        p.textContent = `${label} at ${msg.time}: ${msg.text}`;
+        messagesDiv.appendChild(p);
+      }
+
+      socket.on("newMessage", (msg) => {
+        display(msg, "Server");
+      });
+
+      socket.on("userJoined", (msg) => {
+        display(msg, "Notice");
+      });
+
+      socket.on("userLeft", (msg) => {
+        display(msg, "Notice");
+      });
+    </script>
+  </body>
+</html>
